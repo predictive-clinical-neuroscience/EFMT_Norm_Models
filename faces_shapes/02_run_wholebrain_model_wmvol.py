@@ -3,13 +3,13 @@ from pcntoolkit.normative_parallel import execute_nm, collect_nm, delete_nm
 
 # globals
 root_dir = '/project_cephfs/3022017.02/projects/hansav/'
-proc_dir = os.path.join(root_dir,'Run7_fs')
+proc_dir = os.path.join(root_dir,'Run8_fs')
 w_dir = os.path.join(proc_dir,'vox/')
 os.makedirs(w_dir, exist_ok=True)
 
 py_path = '/home/preclineu/hansav/.conda/envs/py38/bin/python'
-log_path = '/project_cephfs/3022017.02/projects/hansav/Run7_fs/logs/'
-job_name = 'Hariri'
+log_path = '/project_cephfs/3022017.02/projects/hansav/Run8_fs/logs/'
+job_name = 'Hariri_fs'
 batch_size = 400 
 memory = '10gb'
 duration = '03:00:00'

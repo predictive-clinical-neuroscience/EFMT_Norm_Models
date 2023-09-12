@@ -17,13 +17,13 @@ import seaborn as sns
 import pingouin as pg
 #%% 
 # globals
-root_dir = '/project_cephfs/3022017.02/projects/hansav/Run7_f/'
+root_dir = '/project_cephfs/3022017.02/projects/hansav/Run8_f/'
 data_dir = os.path.join(root_dir)
 z_dir = os.path.join(root_dir,'vox/')
 w_dir = os.path.join(root_dir,'vox/NPM/Diagnoses/')
 
 ##### load the metadata.csv
-metadata_cl_diagnosis = pd.read_csv('/project_cephfs/3022017.02/projects/hansav/Run7_f/data/MIND_Set_diagnoses.csv')
+metadata_cl_diagnosis = pd.read_csv('/project_cephfs/3022017.02/projects/hansav/Run8_f/data/MIND_Set_diagnoses.csv')
 #print(metadata_cl_diagnosis)
 
 #%% LOAD THE Z-EST FILE AND THE MASK (MNI 2MM)
@@ -34,6 +34,84 @@ Z_est = ptkload(os.path.join(z_dir,'Z_predcl.pkl'), mask=mask_nii)
 #Example nii file:
 examplenii_cope = '/project_cephfs/3022017.02/HCP_S1200/211114/MNINonLinear/Results/tfMRI_EMOTION/tfMRI_EMOTION_hp200_s4_level2vol.feat/cope3.feat/stats/cope1.nii.gz'
 #
+
+
+#%% Get deviations for clinical sample - NO MIND-Set CONTROLS:
+##### load the metadata.csv
+metadata_all_clin_test = pd.read_csv('/project_cephfs/3022017.02/projects/hansav/Run8_f/data/MIND_Set_metadata_control_split2_patients.csv')
+#print(metadata_cl_diagnosis)
+
+mask_Diganosis = metadata_all_clin_test['diagnosis'].eq(1)
+Z_est_Diganosis = Z_est[mask_Diganosis]
+Z_est_Diganosis_trans = np.transpose(Z_est_Diganosis)
+filename_part = (z_dir +'Z_est_MIND_Set_clinical.nii.gz')
+save_nifti(Z_est_Diganosis_trans, filename_part, examplenii=examplenii_cope, mask=mask_nii, dtype='float32')
+
+z_dir = os.path.join(root_dir,'vox/NPM/')
+
+
+##Threshold
+in_filename = (z_dir +'Z_est_MIND_Set_clinical.nii.gz')
+#print(filename)
+out_filename_pos = (z_dir +'Z_est_MIND_Set_clinical' +'_pos2pt6.nii.gz')
+out_filename_neg = (z_dir +'Z_est_MIND_Set_clinical' +'_neg2pt6.nii.gz')
+#print(out_filename_pos, out_filename_neg)
+
+command = ('fslmaths ' +in_filename +' -thr 2.6 ' +out_filename_pos)
+print(command)
+os.system(command)
+!command
+
+command = ('fslmaths ' +in_filename +' -mul -1 -thr 2.6 ' +out_filename_neg)
+print(command)
+os.system(command)
+!command
+
+
+##Binarise
+in_filename_pos = (z_dir +'Z_est_MIND_Set_clinical' +'_pos2pt6.nii.gz')
+in_filename_neg = (z_dir +'Z_est_MIND_Set_clinical' +'_neg2pt6.nii.gz')
+#print(filename)
+out_filename_pos = (z_dir +'Z_est_MIND_Set_clinical' +'_pos2pt6_bin.nii.gz')
+out_filename_neg = (z_dir +'Z_est_MIND_Set_clinical' +'_neg2pt6_bin.nii.gz')
+#print(out_filename_pos, out_filename_neg)
+
+command = ('fslmaths ' +in_filename_pos +' -bin  ' +out_filename_pos)
+print(command)
+os.system(command)
+!command
+
+command = ('fslmaths ' +in_filename_neg +' -bin  ' +out_filename_neg)
+print(command)
+os.system(command)
+!command
+
+##Sum
+in_filename_pos = (z_dir +'Z_est_MIND_Set_clinical' +'_pos2pt6_bin.nii.gz')
+in_filename_neg = (z_dir +'Z_est_MIND_Set_clinical'+'_neg2pt6_bin.nii.gz')
+
+thresh_bin_nii_pos = load_nifti(in_filename_pos, mask=mask_nii)
+thresh_bin_nii_neg = load_nifti(in_filename_neg, mask=mask_nii)
+
+out_filename_pos = (z_dir +'Z_est_MIND_Set_clinical' +'_count_pos.nii.gz')
+out_filename_neg = (z_dir +'Z_est_MIND_Set_clinical' +'_count_neg.nii.gz')
+#print(out_filename_pos, out_filename_neg)
+
+#Sum along the 2nd dimension(4D = volumes = participants) of the Positive thresholded, binarised file
+sum_diagnosis_pos = np.sum(thresh_bin_nii_pos,axis=1)
+#Save as nii
+save_nifti(sum_diagnosis_pos, out_filename_pos, examplenii=mask_nii, mask=mask_nii, dtype='float32')
+
+#Sum along the 2nd dimension(4D = volumes = participants) of the Negative thresholded, binarised file
+sum_diagnosis_neg = np.sum(thresh_bin_nii_neg,axis=1)
+#Save as nii
+save_nifti(sum_diagnosis_neg,out_filename_neg, examplenii=mask_nii, mask=mask_nii, dtype='float32')
+
+
+
+
+
+
 #%% SPLIT EACH DIGANOSIS Z-EST TO NII FILES
 
 for col in metadata_cl_diagnosis.columns[3:]:

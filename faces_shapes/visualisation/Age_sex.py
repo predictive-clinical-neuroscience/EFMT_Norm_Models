@@ -14,7 +14,8 @@ import matplotlib.ticker as ticker
 
 # globals
 
-root_dir = '/project_cephfs/3022017.02/projects/hansav/Run7_fs/'
+#root_dir = '/project_cephfs/3022017.02/projects/hansav/Run8_fss/'
+root_dir = '/project_cephfs/3022017.02/projects/hansav/Run8_fs/'
 data_dir = os.path.join(root_dir,'data/')
 mask_nii = '/opt/fsl/6.0.3/data/standard/MNI152_T1_2mm_brain_mask.nii.gz'
 ex_nii = os.path.join(data_dir, 'faces_shapes_AOMIC_4D.nii.gz')
@@ -73,7 +74,7 @@ del(df_test_sex_split)
 color_coding = ['#4e79a7','#f28e2b','#76b7b2','#e15759','#59a14f','#b07aa1']
                 #['#AOMIC_PIOP2','#HCP_S1200','UKBiobank','#HCP_Dev','#HCP_Dev','#MIND_Set']
 
-bins = np.histogram_bin_edges(df_all_M['age'], bins='auto')
+bins = np.histogram_bin_edges(df_all_M['age'], bins=80)
 
 #ALL_PARTICIPANTS ON PYRAMID STYLE PLOT
 plt.style.use('seaborn-white')
@@ -81,7 +82,7 @@ fig, axs = plt.subplots(1, 2, sharey=False, tight_layout=True)
 #fig.suptitle('Age \n Full sample')
 #Invert the x axis of
 axs[0].invert_xaxis()
-axs[0].set_xlim(1000, 0)
+axs[0].set_xlim(200, 0)
 axs[0].invert_yaxis()
 axs[0].set_ylim((85,5))
 axs[0].set_yticklabels([])
@@ -90,25 +91,25 @@ axs[0].spines['top'].set_visible(False)
 axs[0].spines['left'].set_visible(False)
 axs[0].hist((df_all_M.pivot(columns='site', values='age')), bins = bins, stacked = True, color=color_coding, ec = 'white', lw = 0.2, orientation = 'horizontal')#, ec='black')
 
-axs[1].set_xlim(0,1000)
+axs[1].set_xlim(0,200)
 axs[1].hist((df_all_F.pivot(columns='site', values='age')), bins = bins, stacked = True, color=color_coding, ec = 'white',  lw = 0.2, orientation = 'horizontal')#, ec='black')
 axs[1].set(xlabel='Number of Females')
 axs[1].set(ylabel='Age')
 axs[1].spines['top'].set_visible(False)
 axs[1].spines['right'].set_visible(False)
 
-plt.legend('sites')
+#plt.legend('sites')
 
 plt.ylim((85,5))
 plt.show()
-#fig.savefig('/project_cephfs/3022017.02/projects/hansav/Run7_fs/Figures/Age_sex_all_histogram.png', dpi=300)  
+fig.savefig('/project_cephfs/3022017.02/projects/hansav/Run8_fs/Figures/Age_sex_all_histogram.png', dpi=300)  
 
 #%% TRAIN AGE SEX: 
     
 color_coding = ['#4e79a7','#f28e2b','#76b7b2','#e15759','#59a14f','#b07aa1']
                 #['#AOMIC_PIOP2','#HCP_S1200','UKBiobank','#HCP_Dev','#HCP_Dev','#MIND_Set']
 
-bins = np.histogram_bin_edges(df_train_M['age'], bins='auto')
+bins = np.histogram_bin_edges(df_train_M['age'], bins=80)
 
 
 #ALL_PARTICIPANTS ON PYRAMID STYLE PLOT
@@ -117,7 +118,7 @@ fig, axs = plt.subplots(1, 2, sharey=False, tight_layout=True)
 #fig.suptitle('Age \n Full sample')
 #Invert the x axis of
 axs[0].invert_xaxis()
-axs[0].set_xlim(400, 0)
+axs[0].set_xlim(100, 0)
 axs[0].invert_yaxis()
 axs[0].set_ylim((85,5))
 axs[0].set_yticklabels([])
@@ -126,7 +127,7 @@ axs[0].spines['top'].set_visible(False)
 axs[0].spines['left'].set_visible(False)
 axs[0].hist((df_train_M.pivot(columns='site', values='age')), bins = bins, stacked = True, color=color_coding, ec = 'white', lw = 0.2, orientation = 'horizontal')#, ec='black')
 
-axs[1].set_xlim(0, 400)
+axs[1].set_xlim(0, 100)
 axs[1].hist((df_train_F.pivot(columns='site', values='age')), bins = bins, stacked = True, color=color_coding, ec = 'white',  lw = 0.2, orientation = 'horizontal')#, ec='black')
 axs[1].set(xlabel='Number of Females')
 axs[1].set(ylabel='Age')
@@ -135,7 +136,7 @@ axs[1].spines['right'].set_visible(False)
 
 plt.ylim((85,5))
 plt.show()
-fig.savefig('/project_cephfs/3022017.02/projects/hansav/Run7_fs/Figures/Age_sex_train_histogram.png', dpi=300)  
+fig.savefig('/project_cephfs/3022017.02/projects/hansav/Run8_fs/Figures/Age_sex_train_histogram.png', dpi=300)  
 
 #%% TEST AGE SEX: 
     
@@ -143,7 +144,7 @@ color_coding = ['#4e79a7','#f28e2b','#76b7b2','#e15759','#59a14f','#b07aa1']
                 #['#AOMIC_PIOP2','#HCP_S1200','UKBiobank','#HCP_Dev','#HCP_Dev','#MIND_Set']
 
 
-bins = np.histogram_bin_edges(df_train_M['age'], bins='auto')
+bins = np.histogram_bin_edges(df_train_M['age'], bins=80)
 
 #ALL_PARTICIPANTS ON PYRAMID STYLE PLOT
 plt.style.use('seaborn-white')
@@ -151,7 +152,7 @@ fig, axs = plt.subplots(1, 2, sharey=False, tight_layout=True)
 #fig.suptitle('Age \n Full sample')
 #Invert the x axis of
 axs[0].invert_xaxis()
-axs[0].set_xlim(400, 0)
+axs[0].set_xlim(100, 0)
 axs[0].invert_yaxis()
 axs[0].set_ylim((85,5))
 axs[0].set_yticklabels([])
@@ -160,7 +161,7 @@ axs[0].spines['top'].set_visible(False)
 axs[0].spines['left'].set_visible(False)
 axs[0].hist((df_test_M.pivot(columns='site', values='age')), bins = bins, stacked = True, color=color_coding, ec = 'white', lw = 0.2, orientation = 'horizontal')#, ec='black')
 
-axs[1].set_xlim(0, 400)
+axs[1].set_xlim(0, 100)
 axs[1].hist((df_test_F.pivot(columns='site', values='age')), bins = bins, stacked = True, color=color_coding, ec = 'white',  lw = 0.2, orientation = 'horizontal')#, ec='black')
 axs[1].set(xlabel='Number of Females')
 axs[1].set(ylabel='Age')
@@ -169,15 +170,16 @@ axs[1].spines['right'].set_visible(False)
 
 plt.ylim((85,5))
 plt.show()
-fig.savefig('/project_cephfs/3022017.02/projects/hansav/Run7_fs/Figures/Age_sex_test_histogram.png', dpi=300)  
+fig.savefig('/project_cephfs/3022017.02/projects/hansav/Run8_fs/Figures/Age_sex_test_histogram.png', dpi=300)  
 
 
 
 #%% CLINICAL SAMPLE: 
 #load covariates
-print('loading clnical sample ...')
-df_clinical = pd.read_csv(os.path.join(root_dir, 'metadata_cl.csv'))
-df_clinical = df_clinical.loc[(df_test['dataset'] == 'AOMIC') | \
+print('loading clinical sample ...')
+df_clinical = pd.read_csv('/project_cephfs/3022017.02/projects/hansav/Run8_fs/data/MIND_Set_metadata_control_split2_patients.csv')
+#df_clinical = pd.read_csv(os.path.join(root_dir, 'metadata_cl.csv'))
+df_clinical = df_clinical.loc[(df_clinical['dataset'] == 'AOMIC') | \
                     (df_clinical['dataset'] == 'HCP_S1200') | \
                     (df_clinical['dataset'] == 'UKBiobank') | \
                     (df_clinical['dataset'] == 'HCP_Dev') | \
@@ -193,7 +195,7 @@ del(df_clinical_sex_split)
 color_coding = ['#b07aa1']
                 #['#AOMIC_PIOP2','#HCP_S1200','UKBiobank','#HCP_Dev','#HCP_Dev','#MIND_Set']
 
-bins = np.histogram_bin_edges(df_clinical_M['age'], bins='auto')
+bins = np.histogram_bin_edges(df_clinical_M['age'], bins=80)
 
 #ALL_PARTICIPANTS ON PYRAMID STYLE PLOT
 plt.style.use('seaborn-white')
@@ -201,7 +203,7 @@ fig, axs = plt.subplots(1, 2, sharey=False, tight_layout=True)
 #fig.suptitle('Age \n Full sample')
 #Invert the x axis of
 axs[0].invert_xaxis()
-axs[0].set_xlim(40, 0)
+axs[0].set_xlim(10, 0)
 axs[0].invert_yaxis()
 axs[0].set_ylim((85,5))
 axs[0].set_yticklabels([])
@@ -210,7 +212,7 @@ axs[0].spines['top'].set_visible(False)
 axs[0].spines['left'].set_visible(False)
 axs[0].hist((df_clinical_M.pivot(columns='site', values='age')), bins = bins, stacked = True, color=color_coding, ec = 'white', lw = 0.2, orientation = 'horizontal')#, ec='black')
 
-axs[1].set_xlim(0,40)
+axs[1].set_xlim(0,10)
 axs[1].hist((df_clinical_F.pivot(columns='site', values='age')), bins = bins, stacked = True, color=color_coding, ec = 'white',  lw = 0.2, orientation = 'horizontal')#, ec='black')
 axs[1].set(xlabel='Number of Females')
 axs[1].set(ylabel='Age')
@@ -219,5 +221,5 @@ axs[1].spines['right'].set_visible(False)
 
 plt.ylim((85,5))
 plt.show()
-fig.savefig('/project_cephfs/3022017.02/projects/hansav/Run7_fs/Figures/Age_sex_clinical_histogram.png', dpi=300)  
+fig.savefig('/project_cephfs/3022017.02/projects/hansav/Run8_fs/Figures/Age_sex_clinical_histogram.png', dpi=300)  
 

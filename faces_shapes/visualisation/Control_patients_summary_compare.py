@@ -27,7 +27,7 @@ from scipy.stats import mannwhitneyu
 ##################
 # global variables
 ##################
-root_dir = '/project_cephfs/3022017.02/projects/hansav/Run7_fs/'
+root_dir = '/project_cephfs/3022017.02/projects/hansav/Run8_fs/'
 data_dir = os.path.join(root_dir,'data/')
 mask_nii = os.path.join('/opt/fsl/6.0.3/data/standard/MNI152_T1_2mm_brain_mask.nii.gz')
 
@@ -39,7 +39,7 @@ Z_est_control_test = ptkload(os.path.join(w_dir,'Z_estimate.pkl'), mask=mask_nii
 Z_est_clinical = ptkload(os.path.join(w_dir,'Z_predcl.pkl'), mask=mask_nii)
 
 #Load in the diagnosis information
-metadata_cl_diagnosis = pd.read_csv('/project_cephfs/3022017.02/projects/hansav/Run7_fs/data/MIND_Set_diagnoses.csv')
+metadata_cl_diagnosis = pd.read_csv('/project_cephfs/3022017.02/projects/hansav/Run8_fs/data/MIND_Set_diagnoses.csv')
 
 
 ##################
@@ -72,18 +72,18 @@ clinical_counts_df = pd.DataFrame(clinical_counts)
 counts_df = pd.concat([reference_counts_df, control_counts_df, clinical_counts_df], ignore_index=True, axis =1 )
 counts_df = counts_df.rename(columns = {0:'reference_counts', 1:'control_counts', 2:'clinical_counts'})
 
-counts_df.to_csv(os.path.join('/project_cephfs/3022017.02/projects/hansav/Run7_fs/vox/NPM/counts_hist.csv'),index=False)      
+counts_df.to_csv(os.path.join('/project_cephfs/3022017.02/projects/hansav/Run8_fs/vox/NPM/counts_hist.csv'),index=False)      
 
 #This means once you have saved the file you can simply load in the csv in future - saves lots of time. 
 
 ##################
 #LOAD IN COUNTS
 ##################
-counts_df = pd.read_csv('/project_cephfs/3022017.02/projects/hansav/Run7_fs/vox/NPM/counts_hist.csv')
+counts_df = pd.read_csv('/project_cephfs/3022017.02/projects/hansav/Run8_fs/vox/NPM/counts_hist.csv')
 
-counts_df_ref = pd.read_csv('/project_cephfs/3022017.02/projects/hansav/Run7_fs/vox/NPM/counts_hist.csv')['reference_counts']
-counts_df_cont = pd.read_csv('/project_cephfs/3022017.02/projects/hansav/Run7_fs/vox/NPM/counts_hist.csv')['control_counts']
-counts_df_clin = pd.read_csv('/project_cephfs/3022017.02/projects/hansav/Run7_fs/vox/NPM/counts_hist.csv')['clinical_counts']
+counts_df_ref = pd.read_csv('/project_cephfs/3022017.02/projects/hansav/Run8_fs/vox/NPM/counts_hist.csv')['reference_counts']
+counts_df_cont = pd.read_csv('/project_cephfs/3022017.02/projects/hansav/Run8_fs/vox/NPM/counts_hist.csv')['control_counts']
+counts_df_clin = pd.read_csv('/project_cephfs/3022017.02/projects/hansav/Run8_fs/vox/NPM/counts_hist.csv')['clinical_counts']
 
 
 reference_counts_df = pd.DataFrame(counts_df_ref)
@@ -100,7 +100,7 @@ sns.set_style("white")
 plt.rcParams['figure.dpi'] = 300
 fig, ax = plt.subplots()
 sns.histplot(data=counts_df, x='reference_counts', color="#9D9D9D", label="Reference Cohort", kde=True,  stat="percent", alpha = 0.5, bins=bins)
-#sns.histplot(data=counts_df, x='clinical_counts', color="#AA3377", label="Patients", kde=True, stat="percent", alpha = 0.3, bins=bins)
+sns.histplot(data=counts_df, x='clinical_counts', color="#AA3377", label="Patients", kde=True, stat="percent", alpha = 0.3, bins=bins)
 #sns.histplot(data=counts_df, x='control_counts', color="#9D9D9D", label="MIND Set Controls", kde=True,  stat="percent")
 sns.despine()
 plt.xlim(0,20000)
@@ -109,7 +109,7 @@ plt.xlabel('Number of deviations ± 2.6')
 plt.ylabel('Percentage of sample')
 #plt.legend(frameon=False) 
 plt.show()
-fig.savefig('/project_cephfs/3022017.02/projects/hansav/Run7_fs/Figures/deviation_count_control.png', dpi=300)
+fig.savefig('/project_cephfs/3022017.02/projects/hansav/Run8_fs/Figures/deviation_count_control_clinical.png', dpi=300)
 
 
 
@@ -126,7 +126,7 @@ sns.stripplot(data = counts_df[['reference_counts', 'clinical_counts']], marker 
 plt.xticks([0,1], ['Reference', 'MIND-Set\n Patients'])
 sns.despine()
 plt.show()
-fig.savefig('/project_cephfs/3022017.02/projects/hansav/Run7_fs/Figures/deviation_count_control_clincial_boxplot_scat.png', dpi=300)
+fig.savefig('/project_cephfs/3022017.02/projects/hansav/Run8_fs/Figures/deviation_count_control_clincial_boxplot_scat.png', dpi=300)
 
 
 plt.rcParams['figure.dpi'] = 300
@@ -136,4 +136,4 @@ sns.boxplot(data = counts_df[['reference_counts', 'clinical_counts']], showflier
 plt.xticks([0,1], ['Reference', 'MIND-Set\n Patients'])
 sns.despine(top=True, right=True, left=False, bottom=True)
 plt.show()
-fig.savefig('/project_cephfs/3022017.02/projects/hansav/Run7_fs/Figures/deviation_count_control_clincial_boxplot.png', dpi=300)
+fig.savefig('/project_cephfs/3022017.02/projects/hansav/Run8_fs/Figures/deviation_count_control_clincial_boxplot.png', dpi=300)

@@ -9,9 +9,9 @@ import seaborn as sns
 
 #%% Set globals
 
-scriptsdir = '/project_cephfs/3022017.02/projects/hansav/Run7_fs/scripts/'
-datadir = '/project_cephfs/3022017.02/projects/hansav/Run7_fs/data/'
-Zdir = '/project_cephfs/3022017.02/projects/hansav/Run7_fs/vox/'
+scriptsdir = '/project_cephfs/3022017.06/projects/hansav/Run8_fs/scripts/'
+datadir = '/project_cephfs/3022017.06/projects/hansav/Run8_fs/data/'
+Zdir = '/project_cephfs/3022017.06/projects/hansav/Run8_fs/vox/'
 sys.path.append(os.path.join(scriptsdir, 'saccade'))
 from scca import SCCA
 
@@ -28,7 +28,7 @@ X2 = ptk.dataio.fileio.load(os.path.join(Zdir, 'Z_predcl.nii.gz'), mask=mask_nii
 
 #%%Select which SCCA to run: 
 
-##DIAGNOSES
+# ##DIAGNOSES
 X1 = df_diag[['PanicDisFinal','AgoraPhFinal', 'SocPhFinal', 'SpecPhFinal', 
               'OCDFinal','PTSDFinal', 'GADFinal', 'MoodDisFinal', 'AnxNOSFinal',
                 'Conclusie_ADHD_Diagnose', 'Conclusie_ASD_Diagnose']].to_numpy()
@@ -82,7 +82,7 @@ for i in range(n_splits):
     R[i] = r
     R_Train[i] = C.r
 
-ptk.dataio.fileio.save(W2, os.path.join(datadir,'W_faces_shapes_diagnosis.nii.gz'), example=ex_nii, mask=mask_nii)
+ptk.dataio.fileio.save(W2, os.path.join(datadir,'W_faces_diagnosis.nii.gz'), example=ex_nii, mask=mask_nii)
 
 # n_perm = 100
 # n_splits = 5
@@ -135,8 +135,9 @@ faces_factors_test_df.mean()
 #Save as a dataframe -> csv to be able to easily re-run in the future if necessary.
 faces_factors_scca = pd.concat([faces_factors_train_df, faces_factors_test_df], ignore_index=True, axis =1 )
 faces_factors_scca = faces_factors_scca.rename(columns = {0:'Train', 1:'Test'})
-#faces_factors_scca.to_csv(os.path.join('/project_cephfs/3022017.02/projects/hansav/Run7_fs/vox/NPM/SCCA/Faces_shapes_scca_factors.csv'),index=False)      
-faces_factors_scca.to_csv(os.path.join('/project_cephfs/3022017.02/projects/hansav/Run7_fs/vox/NPM/SCCA/Faces_shapes_scca_diagnosis.csv'),index=False)      
+#faces_factors_scca.to_csv(os.path.join('/project_cephfs/3022017.06/projects/hansav/Run8_fs/vox/NPM/SCCA/Faces_scca_factors.csv'),index=False)      
+faces_factors_scca.to_csv(os.path.join('/project_cephfs/3022017.06/projects/hansav/Run8_fs/vox/NPM/SCCA/Faces_scca_diagnosis.csv'),index=False)      
+
 
  
 #%% Plots:
@@ -146,12 +147,12 @@ faces_factors_scca.to_csv(os.path.join('/project_cephfs/3022017.02/projects/hans
 sns.set_style("white")
 plt.rcParams['figure.dpi'] = 300
 faces_W = W1
-#faces_W = np.load('/project_cephfs/3022017.02/projects/hansav/Run7_f/validation/eft/W1_faces_factors.npy')
-#faces_shapes_W = np.load('/project_cephfs/3022017.02/projects/hansav/Run6_f/validation/eft/W1_faces_shapes_diagnosis.npy')
+#faces_W = np.load('/project_cephfs/3022017.06/projects/hansav/Run8_fs/validation/eft/W1_faces_factors.npy')
+#faces_shapes_W = np.load('/project_cephfs/3022017.06/projects/hansav/Run6_f/validation/eft/W1_faces_shapes_diagnosis.npy')
 faces_W_df = pd.DataFrame(faces_W, columns = ['Negative\nValence', 'Cognitive\nFunction', 'Social\nProcesses', 'Arousal/\nInhibition'])
 Faces_W_melt =pd.melt(faces_W_df)
 Faces_W_melt.rename(columns = {'variable' : 'Factor'}, inplace = True)
-sns.catplot(data = Faces_W_melt, x="Factor", y="value", palette = ['#e199c2','#f7e5ef','#eab8d4' , '#ca4e95'], kind="bar", ci ="sd")
+sns.catplot(data = Faces_W_melt, x="Factor", y="value", palette = ['#eab8d4', '#ca4e95', '#f7e5ef', '#e199c2'], kind="bar", ci ="sd")
                   #errorbar="sd", capsize=.2, join=False, color=".5")
 sns.swarmplot(data = Faces_W_melt, x="Factor", y="value", size = 3,  dodge = False, color = "black")
 #plt.xticks([0,1,2,3], ['Negative \nValence', 'Cognitive \nFunction', 'Social \nProcesses', 'Arousal/\nInhibition'])
@@ -160,7 +161,7 @@ plt.xlabel('Factor')
 #plt.xlim(reversed(plt.xlim()))
 plt.ylim(-0.9,0.1)
 sns.despine()
-plt.savefig('/project_cephfs/3022017.02/projects/hansav/Run7_fs/Figures/scca_factors.png', dpi=300)
+plt.savefig('/project_cephfs/3022017.06/projects/hansav/Run8_fs/Figures/scca_factors.png', dpi=300)
 
 
 #%% Plots:
@@ -169,7 +170,7 @@ plt.savefig('/project_cephfs/3022017.02/projects/hansav/Run7_fs/Figures/scca_fac
 ##################
 sns.set_style("white")
 plt.rcParams['figure.dpi'] = 300
-faces_W = np.load('/project_cephfs/3022017.02/projects/hansav/Run6_f/validation/eft/W1_faces_diagnosis.npy')
+faces_W = np.load('/project_cephfs/3022017.06/projects/hansav/Run6_f/validation/eft/W1_faces_diagnosis.npy')
 faces_W_df = pd.DataFrame(faces_W, columns = ['Panic Disorder','Agoraphobia', 'Social Phobia', 'Specific Phobia', 
                                                             'OCD','PTSD', 'GAD', 'Mood Disorder', 'Anxiety Disorder NOS',
                                                             'ADHD', 'ASD'])
@@ -188,13 +189,12 @@ plt.xlabel('Diagnosis')
 #plt.xlim(reversed(plt.xlim()))
 plt.ylim(-0.8,0.6)
 sns.despine()
-plt.savefig('/project_cephfs/3022017.02/projects/hansav/Run7_fs/Figures/scca_diagnosis.png', dpi=300)
+plt.savefig('/project_cephfs/3022017.06/projects/hansav/Run8_fs/Figures/scca_diagnosis.png', dpi=300)
 
-
-#%% Create mean W_faces_shapes_X.nii.gz file: 
+#%% Create mean W_faces_X.nii.gz file: 
     
-in_filename = os.path.join(Zdir + 'NPM/SCCA/W_faces_shapes_factors.nii.gz')
-out_filename = os.path.join (Zdir +'NPM/SCCA/W_faces_shapes_factors_mean.nii.gz')
+in_filename = os.path.join(Zdir + 'NPM/SCCA/W_faces_factors.nii.gz')
+out_filename = os.path.join (Zdir +'NPM/SCCA/W_faces_factors_mean.nii.gz')
  
 command = ('fslmaths ' +in_filename +' -Tmean ' +out_filename)
 print(command)
@@ -202,8 +202,8 @@ os.system(command)
 !command   
 
     
-in_filename = os.path.join(Zdir + 'NPM/SCCA/W_faces_shapes_diagnosis_flipped.nii.gz')
-out_filename = os.path.join (Zdir +'NPM/SCCA/W_faces_shapes_diagnosis_flipped_mean.nii.gz')
+in_filename = os.path.join(Zdir + 'NPM/SCCA/W_faces_diagnosis_flipped.nii.gz')
+out_filename = os.path.join (Zdir +'NPM/SCCA/W_faces_diagnosis_flipped_mean.nii.gz')
  
 command = ('fslmaths ' +in_filename +' -Tmean ' +out_filename)
 print(command)

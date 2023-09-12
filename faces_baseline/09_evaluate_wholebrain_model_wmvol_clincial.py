@@ -5,7 +5,7 @@ from pcntoolkit.util.utils import calibration_descriptives
 from pcntoolkit.dataio.fileio import load as ptkload
 from pcntoolkit.dataio.fileio import save as ptksave
 
-root_dir = '/project_cephfs/3022017.02/projects/hansav/Run7_f/'
+root_dir = '/project_cephfs/3022017.02/projects/hansav/Run8_f/'
 data_dir = os.path.join(root_dir,'data/')
 mask_nii = '/opt/fsl/6.0.3/data/standard/MNI152_T1_2mm_brain_mask.nii.gz'
 ex_nii = os.path.join(data_dir, 'faces_AOMIC_4D.nii.gz')
@@ -21,6 +21,8 @@ batch_size = 400
 y_te = ptkload(os.path.join(proc_dir,'resp_cl.pkl'))
 EV = ptkload(os.path.join(w_dir,'EXPV_predcl.pkl')) 
 Z = ptkload(os.path.join(w_dir,'Z_predcl.pkl'))
+#Revisions - add SMSE
+SMSE = ptkload(os.path.join(w_dir, 'SMSE_predcl.pkl'))
 
 Z[np.isnan(Z)] = 0
 Z[np.isinf(Z)] = 0
@@ -38,6 +40,9 @@ EV[EV < -1] = 0
 
 ptksave(skew, os.path.join(w_dir,'skew' + output_suffix + '.nii.gz'), example=ex_nii, mask=mask_nii)
 ptksave(kurtosis, os.path.join(w_dir,'kurtosis' + output_suffix + '.nii.gz'), example=ex_nii, mask=mask_nii)
+#Revisions - add SMSE
+ptksave(SMSE.T, os.path.join(w_dir,'SMSE' + output_suffix + '.nii.gz'), example=ex_nii, mask=mask_nii)
+
 ptksave(EV.T, os.path.join(w_dir,'EV' + output_suffix + '.nii.gz'), example=ex_nii, mask=mask_nii)
 ptksave(Z, os.path.join(w_dir,'Z' + output_suffix + '.nii.gz'), example=ex_nii, mask=mask_nii)
 ptksave(y_te, os.path.join(w_dir,'y' + output_suffix + '.nii.gz'), example=ex_nii, mask=mask_nii)

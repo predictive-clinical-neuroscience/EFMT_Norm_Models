@@ -7,7 +7,7 @@ from pcntoolkit.dataio.fileio import save as ptksave
 from pcntoolkit.dataio.fileio import load as ptkload
 
 # globals
-root_dir = '/project_cephfs/3022017.02/projects/hansav/Run7_f/'
+root_dir = '/project_cephfs/3022017.02/projects/hansav/Run8_f/'
 data_dir = os.path.join(root_dir,'data/')
 mask_nii = ('/opt/fsl/6.0.3/data/standard/MNI152_T1_2mm_brain_mask.nii.gz')
 

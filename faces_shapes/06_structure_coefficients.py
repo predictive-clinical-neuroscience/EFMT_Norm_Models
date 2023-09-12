@@ -56,7 +56,7 @@ def compute_pearsonr(A, B):
 
  #%%  
 # globals
-root_dir = '/project_cephfs/3022017.02/projects/hansav/Run7_fs/'
+root_dir = '/project_cephfs/3022017.02/projects/hansav/Run8_fs/'
 data_dir = os.path.join(root_dir)
 w_dir = os.path.join(root_dir,'vox/')
 out_dir = os.path.join(root_dir,'vox/structure_coefficients/')

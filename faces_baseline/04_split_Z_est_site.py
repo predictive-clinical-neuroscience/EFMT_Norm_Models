@@ -1,4 +1,4 @@
-import os
+ os
 import pickle
 import pandas as pd
 import numpy as np
@@ -17,13 +17,13 @@ import seaborn as sns
 import pingouin as pg
 #%% 
 # globals
-root_dir = '/project_cephfs/3022017.02/projects/hansav/Run7_f/'
+root_dir = '/project_cephfs/3022017.02/projects/hansav/Run8_f/'
 data_dir = os.path.join(root_dir)
 z_dir = os.path.join(root_dir,'vox/')
 w_dir = os.path.join(root_dir,'vox/NPM/')
 
 ##### load the metadata_te.csv
-metadata = pd.read_csv('/project_cephfs/3022017.02/projects/hansav/Run7_f/metadata_te.csv')
+metadata = pd.read_csv('/project_cephfs/3022017.02/projects/hansav/Run8_f/metadata_te.csv')
 #print(metadata)
 
 #%% GET THE INDEX OF EACH SITE

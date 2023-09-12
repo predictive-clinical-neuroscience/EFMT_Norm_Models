@@ -17,13 +17,13 @@ import seaborn as sns
 import pingouin as pg
 #%% 
 # globals
-root_dir = '/project_cephfs/3022017.02/projects/hansav/Run7_fs/'
+root_dir = '/project_cephfs/3022017.02/projects/hansav/Run8_fs/'
 data_dir = os.path.join(root_dir)
 z_dir = os.path.join(root_dir,'vox/')
 w_dir = os.path.join(root_dir,'vox/NPM/')
 
 ##### load the metadata_te.csv
-metadata = pd.read_csv('/project_cephfs/3022017.02/projects/hansav/Run7_fs/metadata_te.csv')
+metadata = pd.read_csv('/project_cephfs/3022017.02/projects/hansav/Run8_fs/metadata_te.csv')
 #print(metadata)
 
 #%% GET THE INDEX OF EACH SITE
@@ -46,7 +46,7 @@ print("HCP_Dev indexes from: " +str(HCP_Dev_start_end))
 isUKB = metadata["dataset"].eq("UKBiobank")
 mask1 = isUKB & (~(isUKB.shift() & isUKB.shift(-1)) )
 UKB_start_end = list(isUKB.index[mask1])
-print("DNS indexes from: " +str(UKB_start_end))
+print("UKB indexes from: " +str(UKB_start_end))
 
 isDNS = metadata["dataset"].eq("DNS")
 mask1 = isDNS & (~(isDNS.shift() & isDNS.shift(-1)) )

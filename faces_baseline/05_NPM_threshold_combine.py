@@ -16,7 +16,7 @@ from matplotlib import pyplot as plt
 import seaborn as sns
 import pingouin as pg
 #%% SET GLOBALS
-root_dir = '/project_cephfs/3022017.02/projects/hansav/Run7_f/'
+root_dir = '/project_cephfs/3022017.02/projects/hansav/Run8_f/'
 data_dir = os.path.join(root_dir)
 w_dir = os.path.join(root_dir,'vox/NPM/')
 mask_nii = os.path.join('/opt/fsl/6.0.3/data/standard/MNI152_T1_2mm_brain_mask.nii.gz')

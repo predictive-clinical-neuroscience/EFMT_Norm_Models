@@ -4,13 +4,13 @@ from pcntoolkit.dataio.fileio import load as ptkload
 from pcntoolkit.normative import predict, estimate
 
 # globals
-root_dir = '/project_cephfs/3022017.02/projects/hansav/Run7_fs/'
+root_dir = '/project_cephfs/3022017.02/projects/hansav/Run8_fs/'
 proc_dir = os.path.join(root_dir)
 w_dir = os.path.join(proc_dir,'vox/')
 os.makedirs(w_dir, exist_ok=True)
 
 py_path = '/home/preclineu/hansav/.conda/envs/py38/bin/python'
-log_path = '/project_cephfs/3022017.02/projects/hansav/Run7_fs/logs/'
+log_path = '/project_cephfs/3022017.02/projects/hansav/Run8_fs/logs/'
 job_name = 'Hariri_cl_predict'
 batch_size = 400 
 memory = '40gb'
