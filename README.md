@@ -34,6 +34,8 @@ Normative Models: Clinical cohort - test and evaluate:
 
 
 ## NUMERICAL SOURCE DATA: 
+Detailed information can be found in: Supplementary Data Files.docx
+
 For each faces>shapes and faces>baseline the following outputs were generated and illustrated in figures in the manuscript:
 Reference:
 * EV_ref.nii.gz
