@@ -1,5 +1,5 @@
 # EFMT_Norm_Models
-Code to run the Normative Models for the emotional face matching task and numerical source data, as detailed in the following manuscript: 
+Code to run the Normative Models for the emotional face matching task as detailed in the following manuscript: 
 
 **Dissecting task-based fMRI activity using normative modelling: an application to the Emotional Face Matching Task**
 
@@ -34,7 +34,7 @@ Normative Models: Clinical cohort - test and evaluate:
 
 
 ## NUMERICAL SOURCE DATA: 
-Detailed information can be found in: Supplementary Data Files.docx
+Data can be found at: https://doi.org/10.5281/zenodo.12515479 
 
 For each faces>shapes and faces>baseline the following outputs were generated and illustrated in figures in the manuscript:
 Reference:
